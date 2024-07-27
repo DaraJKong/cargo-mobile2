@@ -67,7 +67,9 @@ pub fn find_entry_by_app_name(
                 if parsed
                     .section("Desktop Entry")
                     .attr("Name")
-                    .map(str::as_ref).unwrap().contains(app_name)
+                    .map::<&str, _>(str::as_ref)
+                    .unwrap()
+                    .contains(app_name.to_str().unwrap())
                 {
                     return Some((parsed, entry_path));
                 }
